@@ -10,8 +10,16 @@ export type BottomTabParamList = {
 
 export type TabOneParamList = {
   TabOneScreen: undefined;
+  AlbumScreen: undefined;
 };
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+
+export type Album = {
+  id : string;
+  imageUri :string;
+  artistHeadline :string;
+}
