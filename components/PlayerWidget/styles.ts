@@ -6,12 +6,10 @@ const styles = StyleSheet.create({
      position:'absolute',
      bottom:79,
      backgroundColor:'#131313',
-     flexDirection:'row',
-    
      width:'100%',
      borderWidth:2,
      borderColor:'black',
-     alignItems:'center',
+     
    },
    RightContainer:{
      flex:1,
@@ -43,6 +41,14 @@ const styles = StyleSheet.create({
     nameContainer:{
        flexDirection:'row',
        alignItems:'center'
+    },
+    progress :{
+      height:4,
+     // width:'100%',
+      backgroundColor: 'white'
+    },
+    row:{
+      flexDirection:'row'
     }
 })
 
