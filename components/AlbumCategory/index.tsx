@@ -9,7 +9,7 @@ export type AlbumCategoryProps = {
     albums :[Album],
 }
 
-const AlbumCategory =(props : AlubumCategoryProps) =>(
+const AlbumCategory =(props : AlbumCategoryProps) =>(
     <View style={styles.container}>
    <Text style={styles.title}>{props.title}</Text>
 
