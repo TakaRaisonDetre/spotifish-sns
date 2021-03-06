@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import {Text, Image, View, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
@@ -7,20 +7,34 @@ import {AntDesign, FontAwesome} from '@expo/vector-icons';
 import {Audio} from 'expo-av'
 import { Sound } from 'expo-av/build/Audio';
 
-const song = {
-    id: '1',
-    uri: 'https://not-just-trash.s3-eu-west-1.amazonaws.com/WhatsApp+Audio+2020-09-22+at+14.20.25.mp4',
-    imageUri: 'https://cache.boston.com/resize/bonzai-fba/Globe_Photo/2011/04/14/1302796985_4480/539w.jpg',
-    title: 'not Just Dev Beats',
-    artist: 'Vadim',
-  }
+import {AppContext} from '../../AppContext'
+import { API, graphqlOperation } from 'aws-amplify';
+import {getSong} from '../../src/graphql/queries'
+
+
 
 const PlayerWidget = () =>{
 
+    const [song, setSong] =useState(null)
     const [sound, setSound] = useState<Sound |null >(null)
     const [isPlaying, setIsPlaying] = useState<boolean>(true)
     const [duration, setDuration] = useState<number | null>(null)
     const [position, setPosition] = useState<number | null>(null)
+    const {songId} = useContext(AppContext)
+
+    useEffect(()=>{
+    /// fetch data from song 
+    const fetchSong=async()=>{
+        try {
+        const data = await API.graphql(graphqlOperation(getSong, {id: songId}))
+        setSong(data.data.getSong)
+        
+        }catch(e){
+            console.log(e)
+        }
+    }
+    fetchSong();
+    },[songId])
 
     const onPlaybackStatusUpdate = (status) =>{
         console.log(status);
@@ -47,9 +61,12 @@ const PlayerWidget = () =>{
 
 
     useEffect(()=>{
-      playCurrentSong();     
-
-    },[])
+     
+     if(song){
+        playCurrentSong();  
+     }   
+       
+    },[song])
 
 
     const onPlayPausePress =async ()=>{
@@ -70,6 +87,9 @@ const PlayerWidget = () =>{
 
         return (position/duration) *100; 
     }
+if(!song){
+    return null;
+}
 
     return (
         <View style={styles.container}>

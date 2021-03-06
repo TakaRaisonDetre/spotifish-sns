@@ -1,0 +1,12 @@
+projects:
+  spotifyclone:
+    schemaPath: Users/taka_raison/Documents/react-native/spotify-clone/graphql/schema.json
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
+        docsFilePath: src/graphql
